@@ -1,0 +1,18 @@
+# As credenciais. Nunca entram no git.
+.env
+*.env
+!.env.exemplo
+
+# Ambiente virtual
+.venv/
+venv/
+env/
+
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+
+# ADK
+.adk/
+*.db
