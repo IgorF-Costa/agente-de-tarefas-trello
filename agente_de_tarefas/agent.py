@@ -272,7 +272,7 @@ def remover_tarefa(nome_da_task: str, nome_do_quadro: str) -> dict:
 
 
 root_agent = Agent(
-    model="gemini-2.5-flash",
+    model=os.getenv("GEMINI_MODEL", "gemini-3.5-flash-lite"),
     name="agente_de_tarefas",
     description="Organiza as tarefas do dia num quadro do Trello, por conversa.",
     instruction="""

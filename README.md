@@ -6,6 +6,18 @@ Entrega do desafio da DIO, a partir do agente base em [`agents/agent04`](https:/
 
 ---
 
+## Funcionando
+
+A conversa, no `adk web`. Ele abre perguntando as tarefas do dia, cria as duas e depois move uma para concluído:
+
+![A conversa com o agente](prints/conversa-com-o-agente.jpg)
+
+O mesmo quadro no Trello, logo depois. A data de 7 de novembro é a que foi ditada como `07/11/2026`, e a tarefa concluída foi pedida com `concluído` acentuado:
+
+![O quadro no Trello](prints/quadro-no-trello.jpg)
+
+---
+
 ## O que ele faz
 
 Abre a conversa perguntando quais são as tarefas do dia, já dizendo a data e o dia da semana. Depois de cada tarefa, pergunta se tem mais alguma, até você dizer que acabou.
@@ -42,6 +54,17 @@ Em [trello.com/power-ups/admin](https://trello.com/power-ups/admin), crie um Pow
 ### 3. A chave do Gemini
 
 Em [aistudio.google.com/apikey](https://aistudio.google.com/apikey), gere uma chave gratuita.
+
+**O modelo vem do `.env`, na variável `GEMINI_MODEL`, e não de dentro do código.** O padrão é `gemini-3.5-flash-lite`. Se a sua chave não alcançar esse modelo, troque a linha em vez de mexer no programa.
+
+Dois erros que aparecem quando o modelo escolhido não serve, e o que cada um quer dizer:
+
+| erro | o que é |
+|---|---|
+| `404 ... is no longer available to new users` | o modelo foi aposentado para contas novas. Escolha outro |
+| `429 RESOURCE_EXHAUSTED` | acabou a cota do dia daquele modelo no plano gratuito. A mensagem diz em quantas horas ela volta |
+
+Os modelos `-lite` têm cota diária bem maior no plano gratuito, e é por isso que o padrão é um deles.
 
 ### 4. O ambiente
 
@@ -114,3 +137,5 @@ O desafio lista seis defeitos do agente base e pede que eu escolha um. Fiz os se
 ## Uma coisa que não é defeito, mas mudei
 
 As ferramentas do agente base devolviam texto com emoji dentro (`❌ Status inválido`). Agora devolvem dicionário. O modelo lê dado melhor do que lê frase pronta, e quem escreve a resposta para a pessoa passa a ser o agente, não a função.
+
+E o nome do modelo saiu do código para o `.env`. O agente base trazia `gemini-2.5-flash` escrito dentro do arquivo, e esse modelo foi aposentado para contas novas enquanto este projeto era montado: quem clonasse o repositório receberia um erro 404 sem saber por quê. Nome de modelo envelhece, e o que envelhece não mora no código.
