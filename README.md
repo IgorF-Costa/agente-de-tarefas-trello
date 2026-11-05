@@ -100,8 +100,6 @@ O desafio lista seis defeitos do agente base e pede que eu escolha um. Fiz os se
 
 **O que eu fiz:** a função `_data_para_o_trello` transforma a data em **meio-dia no fuso desta máquina** antes de converter para UTC. Meio-dia tem doze horas de folga para cada lado, então o dia não anda para trás nem para frente, em nenhum fuso do Brasil.
 
-**Como testei:** rodei a conversão com a data de hoje e conferi o dia que volta do Trello depois de criar o card.
-
 ### 2. "concluído" com acento dava status inválido
 
 **O que acontecia:** o mapa de status tinha as chaves `"a fazer"`, `"em andamento"` e `"concluido"`, comparadas com o texto cru. Quem escrevesse `concluído`, com acento, recebia *status inválido* — e é assim que qualquer pessoa escreve.
@@ -131,6 +129,29 @@ O desafio lista seis defeitos do agente base e pede que eu escolha um. Fiz os se
 **O que acontecia:** o nome `DIO` estava escrito dentro do código, em quatro lugares.
 
 **O que eu fiz:** o quadro padrão vem do `.env`, na variável `TRELLO_BOARD`, e **toda ferramenta aceita o nome de um quadro**. A instrução manda o agente perguntar em qual quadro a tarefa entra quando houver mais de um e a tarefa parecer de outro. A ferramenta `listar_quadros` existe para ele poder perguntar sabendo as opções.
+
+---
+
+## Como eu testei
+
+Duas vezes: ferramenta por ferramenta, e depois conversando.
+
+**Ferramenta por ferramenta.** Chamei as seis direto do Python, contra o quadro de verdade, e fui conferir no Trello o que tinha acontecido:
+
+| o que eu testei | o que aconteceu |
+|---|---|
+| criar com a data escrita como gente escreve, `07/11/2026` | o card venceu em 7 de novembro, não em 6 — **melhoria 1** |
+| criar sem dizer data nenhuma | venceu hoje |
+| mover escrevendo `concluído`, com acento | moveu — **melhoria 2** |
+| apagar uma tarefa | apagou — **melhoria 3** |
+| pedir um status que não existe, `abacaxi` | devolveu `ok: false` e disse quais valem, sem quebrar — **melhoria 4** |
+| pedir um quadro que não existe | devolveu `ok: false` e listou os quadros que existem — **melhoria 4** |
+| rodar tudo isso sem credencial no `.env` | uma única mensagem explicando o que faltava — **melhoria 5** |
+| mandar o nome de outro quadro na chamada | foi para o quadro certo — **melhoria 6** |
+
+**Conversando.** Depois repeti pela tela do `adk web`, que é a conversa do print lá em cima. Ditei *"gravar o vídeo do desafio até 07/11/2026, e revisar o código do agente, essa é para hoje"* e ele criou as duas com as datas certas. Disse *"já revisei o código, pode marcar como concluído"* e ele moveu. Pedi para apagar duas tarefas e ele listou quais iam sumir e **esperou eu confirmar** antes de apagar.
+
+O print do quadro, logo abaixo do print da conversa, é o Trello no minuto seguinte.
 
 ---
 
